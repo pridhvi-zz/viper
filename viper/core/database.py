@@ -399,16 +399,19 @@ class Database:
                                         parent=parent_sha)
                 session.add(malware_entry)
                 session.commit()
+                log.info("Session commited")
                 self.added_ids.setdefault("malware", []).append(malware_entry.id)
-            except IntegrityError:
+                log.info("Added malware: {}".format(self.added.ids))
+            except IntegrityError as ie:
+                log.error("Unable to store file: {0}".format(ie))
                 session.rollback()
                 malware_entry = session.query(Malware).filter(Malware.md5 == obj.md5).first()
             except SQLAlchemyError as e:
-                print_error("Unable to store file: {0}".format(e))
+                log.error("Unable to store file: {0}".format(e))
                 session.rollback()
                 return False
             except Exception as e:
-                print_error("Unable to store file: {0}".format(e))
+                log.error("Unable to store file: {0}".format(e))
                 session.rollback()
                 return False
 
