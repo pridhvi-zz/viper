@@ -8,7 +8,7 @@ from viper.common.out import print_warning, print_error
 from viper.core.project import __project__
 
 
-def store_sample(file_object):
+def store_sample(file_object, project_obj):
     sha256 = file_object.sha256
 
     if not sha256:
@@ -16,7 +16,7 @@ def store_sample(file_object):
         return None
 
     folder = os.path.join(
-        __project__.get_path(),
+        project_obj.get_path(),
         'binaries',
         sha256[0],
         sha256[1],
@@ -55,3 +55,11 @@ def get_sample_path(sha256):
         return None
 
     return path
+
+def remove_sample(file_path):
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        print("Deleted the file from storage: {0}".format(file_path))
+    else:
+        print_error("File Doesnt exists: {0}".format(file_path))
+    return True

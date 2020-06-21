@@ -407,6 +407,10 @@ class Database:
                 print_error("Unable to store file: {0}".format(e))
                 session.rollback()
                 return False
+            except Exception as e:
+                print_error("Unable to store file: {0}".format(e))
+                session.rollback()
+                return False
 
         if tags:
             self.add_tags(sha256=obj.sha256, tags=tags)
