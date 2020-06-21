@@ -401,7 +401,7 @@ class Database:
                 session.commit()
                 log.info("Session commited")
                 self.added_ids.setdefault("malware", []).append(malware_entry.id)
-                log.info("Added malware: {}".format(self.added.ids))
+                log.info("Added malware: {}".format(self.added_ids))
             except IntegrityError as ie:
                 log.error("Unable to store file: {0}".format(ie))
                 session.rollback()
