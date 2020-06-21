@@ -9,6 +9,7 @@ from viper.core.plugins import __modules__
 from viper.core.session import __sessions__
 from viper.core.database import Database
 from viper.core.config import __config__
+from viper.core.project import __project__
 from viper.core.storage import get_sample_path
 
 cfg = __config__
@@ -31,7 +32,7 @@ def autorun_module(file_hash):
         return
 
     if not __sessions__.is_set():
-        __sessions__.new(get_sample_path(file_hash))
+        __sessions__.new(get_sample_path(file_hash,__project__))
 
     for cmd_line in cfg.autorun.commands.split(','):
         split_commands = cmd_line.split(';')
