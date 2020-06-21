@@ -40,9 +40,9 @@ def store_sample(file_object, project_obj):
     return file_path
 
 
-def get_sample_path(sha256):
+def get_sample_path(sha256, project):
     path = os.path.join(
-        __project__.get_path(),
+        project.get_path(),
         'binaries',
         sha256[0],
         sha256[1],
