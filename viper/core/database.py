@@ -211,6 +211,7 @@ class Database:
         return "<{}>".format(self.__class__.__name__)
 
     def _connect_database(self, connection):
+        __project__ = Project()
         if connection.startswith("mysql+pymysql"):
             self.engine = create_engine(connection)
         elif connection.startswith("mysql"):
@@ -219,7 +220,7 @@ class Database:
             self.engine = create_engine(connection, connect_args={"sslmode": "disable"})
         else:
             db_path = os.path.join(__project__.get_path(), 'viper.db')
-            self.engine = create_engine('sqlite:///{0}'.format(db_path), poolclass=NullPool)
+            self.engine = create_engine('sqlite:///{0}'.format(db_path), poolclass=NullPool, connect_args={"check_same_thread": False} )
 
     def add_tags(self, sha256, tags):
         session = self.Session()

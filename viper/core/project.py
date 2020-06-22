@@ -53,13 +53,14 @@ class Project(object):
             path = os.path.join(self.base_path, 'projects', name)
             if not os.path.exists(path):
                 os.makedirs(path)
-
+        log.debug("Project being opened: Name: {}, Path: {}".format(name, path))
         self.name = name
         self.path = path
 
     def close(self):
         # We "close" it and switch to default, if it isn't default already.
         if self.name != 'default':
+            log.debug("Closing project: {} and setting it to default".format(self.name))
             self.path = self.base_path
             self.name = None
 
